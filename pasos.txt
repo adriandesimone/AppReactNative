@@ -5,3 +5,14 @@ npx react-native init ClimaRN
 cd ClimaRN
 npx react-native run-android
 
+# 3-Instalar React Navigation
+npm install @react-navigation/native
+# 4-Instalar dependencias de React Navigation
+npm install react-native-screens react-native-safe-area-context
+# 5-Instalar Stack Navigation
+npm install @react-navigation/native-stack
+
+#6 -Instalar Iconos
+npm install --save react-native-vector-icons
+#7 -Agregar en android/app/build.gradle (al final)
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

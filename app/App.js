@@ -1,6 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, StatusBar, Animated} from 'react-native';
+import {StyleSheet, View, StatusBar, Animated} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
 import ClimaLogo from './assets/weather_icon.png';
+import Home from './screens/Home/Home';
+import Cities from './screens/Cities';
+import Weather from './screens/Weather/Weather';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [animated, setAnimated] = useState(false);
@@ -41,9 +49,25 @@ const App = () => {
     );
   } else {
     return (
-      <View>
-        <Text>Inicio la Aplicación</Text>
-      </View>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ title: 'Mis Ciudades' }}
+          />
+          <Stack.Screen
+            name="Cities"
+            component={Cities}
+            options={{ title: 'Agregar Ciudad' }}
+          />
+          <Stack.Screen
+            name="Weather"
+            component={Weather}
+            options={{ title: 'Pronóstico' }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     );
   }
 };
