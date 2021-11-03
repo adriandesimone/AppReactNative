@@ -1,0 +1,7 @@
+# 1-Crear aplicación react native
+npx react-native init ClimaRN
+
+# 2-Correr aplicación react native
+cd ClimaRN
+npx react-native run-android
+
