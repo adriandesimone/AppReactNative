@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, StatusBar, Animated} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import ClimaLogo from './assets/weather_icon.png';
@@ -13,6 +13,14 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   const [animated, setAnimated] = useState(false);
   const [fadeInThenOut] = useState(new Animated.Value(0));
+
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: '#1f1c22'
+    },
+  };
 
   useEffect(() => {
     Animated.timing(fadeInThenOut, {
@@ -33,7 +41,7 @@ const App = () => {
       <>
         <StatusBar
           animated={true}
-          backgroundColor="#142950"
+          backgroundColor="#664479"
           barStyle="light-content"
         />
         <View style={styles.container}>
@@ -49,22 +57,49 @@ const App = () => {
     );
   } else {
     return (
-      <NavigationContainer>
+      <NavigationContainer theme={MyTheme}>
         <Stack.Navigator>
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{ title: 'Mis Ciudades' }}
+            options={{
+              title: 'Mis Ciudades',
+              headerStyle: {
+                backgroundColor: '#4d305e',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
           />
           <Stack.Screen
             name="Cities"
             component={Cities}
-            options={{ title: 'Agregar Ciudad' }}
+            options={{
+              title: 'Agregar Ciudad',
+              headerStyle: {
+                backgroundColor: '#4d305e',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
           />
           <Stack.Screen
             name="Weather"
             component={Weather}
-            options={{ title: 'Pronóstico' }}
+            options={{
+              title: 'Pronóstico',
+              headerStyle: {
+                backgroundColor: '#4d305e',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
@@ -76,7 +111,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#142950',
+    backgroundColor: '#1f1c22',
     justifyContent: 'space-between',
   },
   image: {

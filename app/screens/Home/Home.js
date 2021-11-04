@@ -1,14 +1,9 @@
 import React from 'react';
-import {TouchableOpacity, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {TouchableOpacity, StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons'
 
 const Home = ({ navigation }) => {
     return <>
-        <StatusBar
-          animated={true}
-          backgroundColor="#142950"
-          barStyle="light-content"
-        />
         <View style={styles.container}>
             <TouchableOpacity activeOpacity={0.5} style={styles.btn} onPress={() => navigation.navigate('Cities')}>
                 <Icon name="plus" size={36} color="#fff" />
@@ -20,11 +15,12 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
+        backgroundColor:'#1f1c22',
     },
     btn:{
         display:'flex',
         position:'absolute',
-        backgroundColor:'#142950',
+        backgroundColor:'#68477c',
         justifyContent:'center',
         alignItems:'center',
         width:48,
