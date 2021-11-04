@@ -12,7 +12,28 @@ npm install react-native-screens react-native-safe-area-context
 # 5-Instalar Stack Navigation
 npm install @react-navigation/native-stack
 
-#6 -Instalar Iconos
+# 6-Instalar Iconos
 npm install --save react-native-vector-icons
-#7 -Agregar en android/app/build.gradle (al final)
+# 7-Agregar en android/app/build.gradle (al final)
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+# 8-OpenWeatherMap - Buscar Ciudad
+https://openweathermap.org/data/2.5/find?q=cordoba&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02&_=1636025453125
+
+# 9-OpenWeatherMap - Obtener Pronóstico por ID (Ciudad de Cordoba)
+https://api.openweathermap.org/data/2.5/weather?id=3860259&appid=cd490bb97cc34009fc11c794901e643d&units=metric&lang=es
+
+# 10-OpenWeatherMap - Obtener Pronóstico extemdodp de 5 días por ID (Ciudad de Cordoba)
+https://api.openweathermap.org/data/2.5/forecast?id=3860259&appid=cd490bb97cc34009fc11c794901e643d&units=metric&lang=es
+
+# 11-OpenWeatherMap - Iconos
+https://github.com/yuvraaaj/openweathermap-api-icons/tree/master/icons
+
+# 12-Otros Iconos
+https://www.iconfinder.com/iconsets/the-weather-is-nice-today
+https://www.iconfinder.com/iconsets/weatherful
+https://www.iconfinder.com/iconsets/weather-filled-outline-6
+https://www.iconfinder.com/iconsets/weather-344
+
+# 13-Curso para hacer una app de clima
+https://www.youtube.com/playlist?list=PLX7mEGqtfnSqWWUM-rvdrrTV1_7RFaJsA
