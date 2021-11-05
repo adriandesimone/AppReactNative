@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
+  FlatList,
+  SafeAreaView,
   StyleSheet,
   ScrollView,
   Text,
@@ -10,9 +12,47 @@ import {
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Item from '../../components/Item';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 const apiID = '439d4b804bc8187953eb36d2a8c26a02';
+const DATA = [
+  {
+    id: '3860259',
+    name: 'Córdoba',
+    country: 'AR',
+    lat: '-31.4135',
+    lon: '-64.1811',
+  },
+  {
+    id: '2519239',
+    name: 'Province of Córdoba',
+    country: 'ES',
+    lat: '38',
+    lon: '-4.8333',
+  },
+  {
+    id: '2519240',
+    name: 'Córdoba',
+    country: 'ES',
+    lat: '37.8833',
+    lon: '-4.7667',
+  },
+  {
+    id: '6357216',
+    name: 'Córdoba',
+    country: 'ES',
+    lat: '37.9045',
+    lon: '-4.7777',
+  },
+  {
+    id: '3530240',
+    name: 'Córdoba',
+    country: 'MX',
+    lat: '18.8833',
+    lon: '-96.9333',
+  },
+];
 
 const searchSchema = Yup.object().shape({
   city: Yup.string()
@@ -47,17 +87,35 @@ const findCity = async values => {
   )
     .then(response => response.json())
     .then(data => {
-      //if (data) {
-      data.list.map(item => {
-        console.log(
-          `${item.id}: ${item.name} - ${item.sys.country} \ Lat: ${item.coord.lat} - Lon: ${item.coord.lon}`,
-        );
-      });
-      //}
-    });
+      if (data && Object.keys(data).length > 0) {
+        data.list.map(item => {
+          console.log(
+            `${item.id}: ${item.name} - ${item.sys.country} \ Lat: ${item.coord.lat} - Lon: ${item.coord.lon}`,
+          );
+        });
+      } else {
+        console.log('No se encontraron ciudades para el patrón ingresado');
+      }
+    })
+    .catch(error => console.log(error));
 };
 
 const Cities = ({navigation}) => {
+  const [selectedId, setSelectedId] = useState(null);
+  const renderItem = ({item}) => {
+    const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#f9c2ff';
+    const color = item.id === selectedId ? 'white' : 'black';
+
+    return (
+      <Item
+        item={item}
+        onPress={() => setSelectedId(item.id)}
+        backgroundColor={{backgroundColor}}
+        textColor={{color}}
+      />
+    );
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scroll}>
@@ -96,6 +154,14 @@ const Cities = ({navigation}) => {
             </View>
           )}
         </Formik>
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            extraData={selectedId}
+          />
+        </SafeAreaView>
       </ScrollView>
     </View>
   );
