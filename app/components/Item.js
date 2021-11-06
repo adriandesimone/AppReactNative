@@ -1,21 +1,41 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
-const Item = ({item, onPress, backgroundColor, textColor}) => {
+const Item = ({item, onPress, backgroundColor, textColor, onIconPress}) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-      <Text style={[styles.title, textColor]}>
-        {item.name} ({item.country})
-      </Text>
-      <Text style={styles.detail}>ID: {item.id}</Text>
-      <Text style={styles.detail}>
-        Lat: {item.lat} - Lon: {item.lon}
-      </Text>
+      <View style={styles.form_row}>
+        <View style={styles.view_content}>
+          <Text style={[styles.title, textColor]}>
+            {item.name} ({item.country})
+          </Text>
+          <Text style={styles.detail}>ID: {item.id}</Text>
+          <Text style={styles.detail}>
+            Lat: {item.lat} - Lon: {item.lon}
+          </Text>
+        </View>
+        <View>
+          <Icon
+            name="plus-circle"
+            size={44}
+            style={textColor}
+            onPress={onIconPress}
+          />
+        </View>
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  form_row: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  view_content: {
+    width: '90%',
+  },
   item: {
     padding: 10,
     marginVertical: 5,
