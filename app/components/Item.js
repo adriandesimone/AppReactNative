@@ -7,8 +7,8 @@ const Item = ({item, onPress, backgroundColor, textColor}) => {
       <Text style={[styles.title, textColor]}>
         {item.name} ({item.country})
       </Text>
-      <Text>ID: {item.id}</Text>
-      <Text>
+      <Text style={styles.detail}>ID: {item.id}</Text>
+      <Text style={styles.detail}>
         Lat: {item.lat} - Lon: {item.lon}
       </Text>
     </TouchableOpacity>
@@ -17,12 +17,16 @@ const Item = ({item, onPress, backgroundColor, textColor}) => {
 
 const styles = StyleSheet.create({
   item: {
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    padding: 10,
+    marginVertical: 5,
+    marginHorizontal: 5,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  detail: {
+    fontSize: 12,
   },
 });
 

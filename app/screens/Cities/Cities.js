@@ -61,47 +61,58 @@ const searchSchema = Yup.object().shape({
     .required('Requerido'),
 });
 
-const findCity = async values => {
-  console.log(values);
-  console.log(values.city);
-  /*
-    try {
-    let cities = [];
-    const value = await AsyncStorage.getItem('cities');
-    if (value) {
-      cities = JSON.parse(value);
-      //if(cities.find((item) => item.))
-    } else {
-      //Obtener la ciudad y guardarla
-      //cities.push(values);
-      //const json_value = JSON.stringify(cities);
-      //await AsyncStorage.setItem('cities', json_value);
-    }
-  } catch (error) {
-    AsyncStorage.removeItem('cities');
-    console.log(error);
-  }
-  */
-  const result = await fetch(
-    `https://openweathermap.org/data/2.5/find?q=${values.city}&type=like&sort=population&cnt=30&appid=${apiID}&_=1636025453125&units=metric&lang=es`,
-  )
-    .then(response => response.json())
-    .then(data => {
-      if (data && Object.keys(data).length > 0) {
-        data.list.map(item => {
-          console.log(
-            `${item.id}: ${item.name} - ${item.sys.country} \ Lat: ${item.coord.lat} - Lon: ${item.coord.lon}`,
-          );
-        });
-      } else {
-        console.log('No se encontraron ciudades para el patrón ingresado');
-      }
-    })
-    .catch(error => console.log(error));
-};
-
 const Cities = ({navigation}) => {
   const [selectedId, setSelectedId] = useState(null);
+  const [cityList, setCityList] = useState([]);
+
+  const findCity = async values => {
+    console.log(values);
+    console.log(values.city);
+    /*
+      try {
+      let cities = [];
+      const value = await AsyncStorage.getItem('cities');
+      if (value) {
+        cities = JSON.parse(value);
+        //if(cities.find((item) => item.))
+      } else {
+        //Obtener la ciudad y guardarla
+        //cities.push(values);
+        //const json_value = JSON.stringify(cities);
+        //await AsyncStorage.setItem('cities', json_value);
+      }
+    } catch (error) {
+      AsyncStorage.removeItem('cities');
+      console.log(error);
+    }
+    */
+    const result = await fetch(
+      `https://openweathermap.org/data/2.5/find?q=${values.city}&type=like&sort=population&cnt=30&appid=${apiID}&_=1636025453125&units=metric&lang=es`,
+    )
+      .then(response => response.json())
+      .then(data => {
+        setCityList([]);
+        if (data && Object.keys(data).length > 0) {
+          data.list.map(item => {
+            const city = {
+              id: item.id,
+              name: item.name,
+              country: item.sys.country,
+              lat: item.coord.lat,
+              lon: item.coord.lon,
+            };
+            //console.log(city);
+            setCityList(cityList => [...cityList, city]);
+            //console.log(`${item.id}: ${item.name} - ${item.sys.country} \ Lat: ${item.coord.lat} - Lon: ${item.coord.lon}`,);
+          });
+          console.log(cityList);
+        } else {
+          console.log('No se encontraron ciudades para el patrón ingresado');
+        }
+      })
+      .catch(error => console.log(error));
+  };
+
   const renderItem = ({item}) => {
     const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#f9c2ff';
     const color = item.id === selectedId ? 'white' : 'black';
@@ -156,7 +167,7 @@ const Cities = ({navigation}) => {
         </Formik>
         <SafeAreaView style={styles.container}>
           <FlatList
-            data={DATA}
+            data={cityList}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             extraData={selectedId}
