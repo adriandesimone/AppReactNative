@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, StatusBar, Animated} from 'react-native';
-import {NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import {Animated, StatusBar, StyleSheet, View} from 'react-native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import ClimaLogo from './assets/weather_icon.png';
@@ -18,7 +18,7 @@ const App = () => {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: '#1f1c22'
+      background: '#1f1c22',
     },
   };
 

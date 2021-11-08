@@ -3,6 +3,7 @@ import {
   Alert,
   FlatList,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   ScrollView,
   Text,
@@ -21,6 +22,8 @@ const Cities = ({navigation}) => {
   const [selectedId, setSelectedId] = useState(null);
   const [cityList, setCityList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState('');
+  const [error, setError] = useState('');
   const apiID = '439d4b804bc8187953eb36d2a8c26a02';
 
   const searchSchema = Yup.object().shape({
@@ -31,25 +34,8 @@ const Cities = ({navigation}) => {
   });
 
   const findCity = async values => {
+    setLoadingText('Buscando ciudades');
     setLoading(true);
-    /*
-      try {
-      let cities = [];
-      const value = await AsyncStorage.getItem('cities');
-      if (value) {
-        cities = JSON.parse(value);
-        //if(cities.find((item) => item.))
-      } else {
-        //Obtener la ciudad y guardarla
-        //cities.push(values);
-        //const json_value = JSON.stringify(cities);
-        //await AsyncStorage.setItem('cities', json_value);
-      }
-    } catch (error) {
-      AsyncStorage.removeItem('cities');
-      console.log(error);
-    }
-    */
     const result = await fetch(
       `https://openweathermap.org/data/2.5/find?q=${values.city}&type=like&sort=population&cnt=30&appid=${apiID}&_=1636025453125&units=metric&lang=es`,
     )
@@ -76,8 +62,8 @@ const Cities = ({navigation}) => {
       });
   };
 
-  const createTwoButtonAlert = id => {
-    setSelectedId(id);
+  const createTwoButtonAlert = item => {
+    setSelectedId(item.id);
     Alert.alert(
       'Agregar ciudad',
       '¿Está seguro de agregar la ciudad seleccionada?',
@@ -90,6 +76,7 @@ const Cities = ({navigation}) => {
           text: 'Agregar',
           onPress: () => {
             console.log('OK Pressed');
+            saveCity(item);
           },
         },
       ],
@@ -97,6 +84,58 @@ const Cities = ({navigation}) => {
         cancelable: true,
       },
     );
+  };
+
+  const createOneAlert = text => {
+    Alert.alert(
+      'Error al agregar ciudad',
+      {text},
+      [
+        {
+          text: 'Ok',
+          onPress: () => {
+            console.log('OK Pressed');
+          },
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  };
+
+  const saveCity = async values => {
+    setLoadingText('Guardando Ciudad');
+    setLoading(true);
+    try {
+      setError('');
+      let cities = [];
+      const storage = await AsyncStorage.getItem('cities');
+      if (storage) {
+        cities = JSON.parse(storage);
+        console.log(cities);
+        if (cities.find(item => item.id === values.id)) {
+          setError('La ciudad que desea agregar ya se encuentra en el listado');
+          createOneAlert({error});
+        } else {
+          cities.push(values);
+          const json_value = JSON.stringify(cities);
+          await AsyncStorage.setItem('cities', json_value);
+          createOneAlert('Ciudad Agregada de manera exitosa');
+        }
+      } else {
+        cities.push(values);
+        const json_value = JSON.stringify(cities);
+        await AsyncStorage.setItem('cities', json_value);
+        createOneAlert('Ciudad Agregada de manera exitosa');
+      }
+      setLoading(false);
+    } catch (e) {
+      AsyncStorage.removeItem('cities');
+      console.log(e);
+      setLoading(false);
+      createOneAlert({e});
+    }
   };
 
   const renderItem = ({item}) => {
@@ -109,60 +148,67 @@ const Cities = ({navigation}) => {
         onPress={() => setSelectedId(item.id)}
         backgroundColor={{backgroundColor}}
         textColor={{color}}
-        onIconPress={() => createTwoButtonAlert(item.id)}
+        onIconPress={() => createTwoButtonAlert(item)}
       />
     );
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scroll}>
-        <Formik
-          initialValues={{city: ''}}
-          validationSchema={searchSchema}
-          onSubmit={findCity}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-          }) => (
-            <View style={styles.form_group}>
-              <View style={styles.container_text_error}>
-                <TextInput
-                  style={styles.form_input}
-                  placeholderTextColor="#a0a0a0"
-                  placeholder="Ingresar ciudad"
-                  onChangeText={handleChange('city')}
-                  onBlur={handleBlur('city')}
-                  value={values.city}
-                />
-                {errors.city && touched.city ? (
-                  <Text style={styles.error}>{errors.city}</Text>
-                ) : null}
+    <>
+      <StatusBar
+        animated={true}
+        backgroundColor="#664479"
+        barStyle="light-content"
+      />
+      <View style={styles.container}>
+        <ScrollView style={styles.scroll}>
+          <Formik
+            initialValues={{city: ''}}
+            validationSchema={searchSchema}
+            onSubmit={findCity}>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
+              <View style={styles.form_group}>
+                <View style={styles.container_text_error}>
+                  <TextInput
+                    style={styles.form_input}
+                    placeholderTextColor="#a0a0a0"
+                    placeholder="Ingresar ciudad"
+                    onChangeText={handleChange('city')}
+                    onBlur={handleBlur('city')}
+                    value={values.city}
+                  />
+                  {errors.city && touched.city ? (
+                    <Text style={styles.error}>{errors.city}</Text>
+                  ) : null}
+                </View>
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  style={styles.btn}
+                  onPress={handleSubmit}>
+                  <Icon name="magnify" size={24} color="#fff" />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                activeOpacity={0.5}
-                style={styles.btn}
-                onPress={handleSubmit}>
-                <Icon name="magnify" size={24} color="#fff" />
-              </TouchableOpacity>
-            </View>
-          )}
-        </Formik>
-        <SafeAreaView style={styles.container}>
-          <FlatList
-            data={cityList}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            extraData={selectedId}
-          />
-        </SafeAreaView>
-      </ScrollView>
-      <Loading isVisible={loading} text="Buscando ciudades" />
-    </View>
+            )}
+          </Formik>
+          <SafeAreaView style={styles.container}>
+            <FlatList
+              data={cityList}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+              extraData={selectedId}
+            />
+          </SafeAreaView>
+        </ScrollView>
+        <Loading isVisible={loading} text={loadingText} />
+      </View>
+    </>
   );
 };
 
@@ -172,7 +218,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1f1c22',
   },
   scroll: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 5,
   },
   form_group: {
     flexDirection: 'row',

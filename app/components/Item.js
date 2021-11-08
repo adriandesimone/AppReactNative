@@ -10,8 +10,8 @@ const Item = ({item, onPress, backgroundColor, textColor, onIconPress}) => {
           <Text style={[styles.title, textColor]}>
             {item.name} ({item.country})
           </Text>
-          <Text style={styles.detail}>ID: {item.id}</Text>
-          <Text style={styles.detail}>
+          <Text style={[styles.detail, textColor]}>ID: {item.id}</Text>
+          <Text style={[styles.detail, textColor]}>
             Lat: {item.lat} - Lon: {item.lon}
           </Text>
         </View>
