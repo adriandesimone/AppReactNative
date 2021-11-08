@@ -6,6 +6,7 @@ import {
   StatusBar,
   StyleSheet,
   ScrollView,
+  ToastAndroid,
   Text,
   TextInput,
   TouchableOpacity,
@@ -14,7 +15,7 @@ import {
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Item from '../../components/Item';
+import CiudadAgregar from '../../components/CiudadAgregar';
 import Loading from '../../components/Loading';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
@@ -23,7 +24,7 @@ const Cities = ({navigation}) => {
   const [cityList, setCityList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const apiID = '439d4b804bc8187953eb36d2a8c26a02';
 
   const searchSchema = Yup.object().shape({
@@ -57,7 +58,8 @@ const Cities = ({navigation}) => {
         setLoading(false);
       })
       .catch(error => {
-        console.log(error);
+        //console.log(error);
+        showToast('Error al realizar la búsqueda');
         setLoading(false);
       });
   };
@@ -75,7 +77,7 @@ const Cities = ({navigation}) => {
         {
           text: 'Agregar',
           onPress: () => {
-            console.log('OK Pressed');
+            //console.log('OK Pressed');
             saveCity(item);
           },
         },
@@ -86,55 +88,47 @@ const Cities = ({navigation}) => {
     );
   };
 
-  const createOneAlert = text => {
-    Alert.alert(
-      'Error al agregar ciudad',
-      {text},
-      [
-        {
-          text: 'Ok',
-          onPress: () => {
-            console.log('OK Pressed');
-          },
-        },
-      ],
-      {
-        cancelable: true,
-      },
-    );
+  //TODO: Cambiar por easy toast
+  const showToast = text => {
+    ToastAndroid.show(text, ToastAndroid.SHORT);
   };
 
   const saveCity = async values => {
     setLoadingText('Guardando Ciudad');
     setLoading(true);
     try {
-      setError('');
+      setMessage('');
       let cities = [];
       const storage = await AsyncStorage.getItem('cities');
       if (storage) {
         cities = JSON.parse(storage);
-        console.log(cities);
+        //console.log(cities);
         if (cities.find(item => item.id === values.id)) {
-          setError('La ciudad que desea agregar ya se encuentra en el listado');
-          createOneAlert({error});
+          setMessage(
+            'La ciudad que desea agregar ya se encuentra en el listado',
+          );
+          showToast(message);
         } else {
           cities.push(values);
           const json_value = JSON.stringify(cities);
           await AsyncStorage.setItem('cities', json_value);
-          createOneAlert('Ciudad Agregada de manera exitosa');
+          setMessage('Ciudad Agregada de manera exitosa');
+          showToast(message);
         }
       } else {
         cities.push(values);
         const json_value = JSON.stringify(cities);
         await AsyncStorage.setItem('cities', json_value);
-        createOneAlert('Ciudad Agregada de manera exitosa');
+        setMessage('Ciudad Agregada de manera exitosa');
+        showToast(message);
       }
       setLoading(false);
     } catch (e) {
       AsyncStorage.removeItem('cities');
-      console.log(e);
+      //console.log(e);
       setLoading(false);
-      createOneAlert({e});
+      setMessage(e);
+      showToast(message);
     }
   };
 
@@ -143,7 +137,7 @@ const Cities = ({navigation}) => {
     const color = item.id === selectedId ? 'white' : 'black';
 
     return (
-      <Item
+      <CiudadAgregar
         item={item}
         onPress={() => setSelectedId(item.id)}
         backgroundColor={{backgroundColor}}
