@@ -26,8 +26,28 @@ https://api.openweathermap.org/data/2.5/weather?id=3860259&appid=cd490bb97cc3400
 # 10-OpenWeatherMap - Obtener Pronóstico extemdodp de 5 días por ID (Ciudad de Cordoba)
 https://api.openweathermap.org/data/2.5/forecast?id=3860259&appid=cd490bb97cc34009fc11c794901e643d&units=metric&lang=es
 
-# 11-OpenWeatherMap - Iconos
+# 11-OpenWeatherMap - Iconos | Condiciones del clima
 https://github.com/yuvraaaj/openweathermap-api-icons/tree/master/icons
+https://openweathermap.org/weather-conditions
+01d - Despejado (dia)
+01n - Despejado (noche)
+02d - Pocas nubes (dia)
+02n - Pocas nubes (noche)
+03d - Nubes dispersas (dia)
+03n - Nubes dispersas (noche)
+04d - Muy nuboso (dia)
+04n - Muy nuboso (noche)
+09d - Aguacero (dia)
+09n - Aguacero (noche)
+10d - Lluvia (dia)
+10n - Lluvia (noche)
+11d - Tormenta eléctrica (dia)
+11n - Tormenta eléctrica (noche)
+13d - Nieve (dia)
+13n - Nieve (noche)
+50d - Niebla (dia)
+50n - Niebla (noche)
+unknown - 
 
 # 12-Otros Iconos
 https://www.iconfinder.com/iconsets/the-weather-is-nice-today
