@@ -1,12 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import {StatusBar, StyleSheet, Text, ToastAndroid, View} from 'react-native';
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import Loading from '../../components/Loading';
 
 const Weather = props => {
   const [weatherInfo, setWeatherInfo] = useState({});
+  const [condicion, setCondicion] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState('');
   const apiID = 'cd490bb97cc34009fc11c794901e643d';
+  const [imgPronostico, setImgPronostico] = useState({});
 
   useEffect(() => {
     getWeatherData(props.route.params);
@@ -25,7 +34,15 @@ const Weather = props => {
     )
       .then(response => response.json())
       .then(data => {
+        //console.log(data);
         setWeatherInfo(data);
+        setCondicion(data.weather[0].description);
+        setImgPronostico({
+          uri: `http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`,
+        });
+        // setImgUrl(
+        //   `../../assets/weather_icons/weatherful/${weatherInfo.weather[0].icon}.png`,
+        // );
         // if (data && Object.keys(data).length > 0) {
         //   data.list.map(item => {
         //     const city = {
@@ -38,7 +55,7 @@ const Weather = props => {
         //     setCityList(cityList => [...cityList, city]);
         //   });
         // }
-        console.log(data);
+        //console.log(data);
         setLoading(false);
       })
       .catch(error => {
@@ -56,9 +73,11 @@ const Weather = props => {
         barStyle="light-content"
       />
       <View>
-        <Text style={styles.text}>Ciudad: {props.route.params.name}</Text>
-        <Text style={styles.text}>País: {props.route.params.country}</Text>
-        <Text style={styles.text}>ID: {props.route.params.id}</Text>
+        <Text style={styles.title}>
+          {props.route.params.name} ({props.route.params.country})
+        </Text>
+        <Image source={imgPronostico} style={styles.imgWeather} />
+        <Text style={styles.condicion}>{condicion}</Text>
         <Text style={styles.text}>{JSON.stringify(weatherInfo)}</Text>
         <Loading isVisible={loading} text={loadingText} />
       </View>
@@ -69,6 +88,22 @@ const Weather = props => {
 const styles = StyleSheet.create({
   text: {
     color: 'white',
+  },
+  title: {
+    paddingTop: 20,
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  condicion: {
+    color: 'white',
+    fontSize: 18,
+  },
+  imgWeather: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
   },
 });
 

@@ -38,6 +38,7 @@ const Home = ({navigation}) => {
       console.log(e);
       setLoading(false);
     }
+    setLoading(false);
   };
 
   const renderItem = ({item}) => {
