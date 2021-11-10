@@ -23,8 +23,10 @@ https://openweathermap.org/data/2.5/find?q=cordoba&type=like&sort=population&cnt
 # 9-OpenWeatherMap - Obtener Pronóstico por ID (Ciudad de Cordoba)
 https://api.openweathermap.org/data/2.5/weather?id=3860259&appid=cd490bb97cc34009fc11c794901e643d&units=metric&lang=es
 
-# 10-OpenWeatherMap - Obtener Pronóstico extemdodp de 5 días por ID (Ciudad de Cordoba)
-https://api.openweathermap.org/data/2.5/forecast?id=3860259&appid=cd490bb97cc34009fc11c794901e643d&units=metric&lang=es
+# 10-OpenWeatherMap - Obtener Pronóstico extendido de 7 días por ID (Ciudad de Cordoba)
+https://api.openweathermap.org/data/2.5/forecast?id=3860259&appid=cd490bb97cc34009fc11c794901e643d&units=metric&lang=es&cnt=7
+
+https://api.openweathermap.org/data/2.5/onecall?lat=-24.7859&lon=-65.4117&exclude=minutely,hourly&appid=cd490bb97cc34009fc11c794901e643d&units=metric&lang=es
 
 # 11-OpenWeatherMap - Iconos | Condiciones del clima
 https://github.com/yuvraaaj/openweathermap-api-icons/tree/master/icons
