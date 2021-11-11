@@ -4,7 +4,7 @@ import Moment from 'moment';
 
 export default function PronosticoFuturo({item}) {
   //console.log(item);
-  Moment.locale('es', {
+  Moment.updateLocale('es', {
     months:
       'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split(
         '_',
@@ -37,22 +37,23 @@ export default function PronosticoFuturo({item}) {
 const styles = StyleSheet.create({
   containerPronostico: {
     margin: 5,
-    padding: 5,
+    paddingLeft: 5,
+    paddingRight: 5,
     borderColor: '#fff',
     borderRadius: 10,
     borderWidth: 1,
-    height: '100%',
+    height: '80%',
     justifyContent: 'center',
   },
   imgWeather: {
-    width: 100,
-    height: 100,
+    width: 75,
+    height: 75,
     alignSelf: 'center',
   },
   dia: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'center',
   },
   descripcion: {
