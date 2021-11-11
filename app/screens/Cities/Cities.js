@@ -24,7 +24,6 @@ const Cities = ({navigation}) => {
   const [cityList, setCityList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState('');
-  const [message, setMessage] = useState('');
   const apiID = '439d4b804bc8187953eb36d2a8c26a02';
 
   const searchSchema = Yup.object().shape({
@@ -97,38 +96,33 @@ const Cities = ({navigation}) => {
     setLoadingText('Guardando Ciudad');
     setLoading(true);
     try {
-      setMessage('');
       let cities = [];
       const storage = await AsyncStorage.getItem('cities');
       if (storage) {
         cities = JSON.parse(storage);
         //console.log(cities);
         if (cities.find(item => item.id === values.id)) {
-          setMessage(
+          showToast(
             'La ciudad que desea agregar ya se encuentra en el listado',
           );
-          showToast(message);
         } else {
           cities.push(values);
           const json_value = JSON.stringify(cities);
           await AsyncStorage.setItem('cities', json_value);
-          setMessage('Ciudad Agregada de manera exitosa');
-          showToast(message);
+          showToast('Ciudad Agregada de manera exitosa');
         }
       } else {
         cities.push(values);
         const json_value = JSON.stringify(cities);
         await AsyncStorage.setItem('cities', json_value);
-        setMessage('Ciudad Agregada de manera exitosa');
-        showToast(message);
+        showToast('Ciudad Agregada de manera exitosa');
       }
       setLoading(false);
     } catch (e) {
       AsyncStorage.removeItem('cities');
       //console.log(e);
       setLoading(false);
-      setMessage(e);
-      showToast(message);
+      showToast(e);
     }
   };
 
@@ -155,51 +149,49 @@ const Cities = ({navigation}) => {
         barStyle="light-content"
       />
       <View style={styles.container}>
-        <ScrollView style={styles.scroll}>
-          <Formik
-            initialValues={{city: ''}}
-            validationSchema={searchSchema}
-            onSubmit={findCity}>
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched,
-            }) => (
-              <View style={styles.form_group}>
-                <View style={styles.container_text_error}>
-                  <TextInput
-                    style={styles.form_input}
-                    placeholderTextColor="#a0a0a0"
-                    placeholder="Ingresar ciudad"
-                    onChangeText={handleChange('city')}
-                    onBlur={handleBlur('city')}
-                    value={values.city}
-                  />
-                  {errors.city && touched.city ? (
-                    <Text style={styles.error}>{errors.city}</Text>
-                  ) : null}
-                </View>
-                <TouchableOpacity
-                  activeOpacity={0.5}
-                  style={styles.btn}
-                  onPress={handleSubmit}>
-                  <Icon name="magnify" size={24} color="#fff" />
-                </TouchableOpacity>
+        <Formik
+          initialValues={{city: ''}}
+          validationSchema={searchSchema}
+          onSubmit={findCity}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <View style={styles.form_group}>
+              <View style={styles.container_text_error}>
+                <TextInput
+                  style={styles.form_input}
+                  placeholderTextColor="#a0a0a0"
+                  placeholder="Ingresar ciudad"
+                  onChangeText={handleChange('city')}
+                  onBlur={handleBlur('city')}
+                  value={values.city}
+                />
+                {errors.city && touched.city ? (
+                  <Text style={styles.error}>{errors.city}</Text>
+                ) : null}
               </View>
-            )}
-          </Formik>
-          <SafeAreaView style={styles.container}>
-            <FlatList
-              data={cityList}
-              renderItem={renderItem}
-              keyExtractor={item => item.id}
-              extraData={selectedId}
-            />
-          </SafeAreaView>
-        </ScrollView>
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.btn}
+                onPress={handleSubmit}>
+                <Icon name="magnify" size={24} color="#fff" />
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={cityList}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            extraData={selectedId}
+          />
+        </SafeAreaView>
         <Loading isVisible={loading} text={loadingText} />
       </View>
     </>

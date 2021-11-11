@@ -45,13 +45,20 @@ const App = () => {
           barStyle="light-content"
         />
         <View style={styles.container}>
-          <Animated.Image
-            source={ClimaLogo}
-            style={[styles.image, {opacity: fadeInThenOut}]}
-          />
-          <Animated.Text style={[styles.text, {opacity: fadeInThenOut}]}>
-            Clima App
-          </Animated.Text>
+          <View style={styles.containerLogo}>
+            <Animated.Image
+              source={ClimaLogo}
+              style={[styles.image, {opacity: fadeInThenOut}]}
+            />
+          </View>
+          <View style={styles.containerText}>
+            <Animated.Text style={[styles.text, {opacity: fadeInThenOut}]}>
+              Clima App
+            </Animated.Text>
+            <Animated.Text style={[styles.textSmall, {opacity: fadeInThenOut}]}>
+              Aplicación para gestionar el clima de distintas ciudades
+            </Animated.Text>
+          </View>
         </View>
       </>
     );
@@ -114,6 +121,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#1f1c22',
     justifyContent: 'space-between',
   },
+  containerLogo: {
+    flex: 0.6,
+  },
+  containerText: {
+    flex: 0.4,
+  },
   image: {
     marginTop: '35%',
     width: 256,
@@ -121,9 +134,15 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   text: {
+    textAlign: 'center',
     color: '#fff',
     fontSize: 50,
-    marginBottom: '30%',
+  },
+  textSmall: {
+    textAlign: 'center',
+    color: '#c2c2c2',
+    fontSize: 16,
+    marginTop: 5,
   },
 });
 
