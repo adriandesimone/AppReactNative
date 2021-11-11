@@ -35,11 +35,11 @@ const Home = ({navigation}) => {
       if (storage) {
         cities = JSON.parse(storage);
         setCityList(cities);
-        console.log(cities);
+        // console.log(cities);
         setLoading(false);
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       setLoading(false);
     }
     setLoading(false);
@@ -58,7 +58,7 @@ const Home = ({navigation}) => {
         {
           text: 'Eliminar',
           onPress: () => {
-            //console.log('OK Pressed');
+            // console.log('OK Pressed');
             deleteCity(item);
           },
         },
@@ -84,7 +84,7 @@ const Home = ({navigation}) => {
         cities = JSON.parse(storage);
         const current = cities.filter(item => item.id !== values.id);
         const json_value = JSON.stringify(current);
-        console.log(json_value);
+        // console.log(json_value);
         await AsyncStorage.setItem('cities', json_value);
         showToast('Se ha eliminado la ciudad seleccionada');
         loadCities();

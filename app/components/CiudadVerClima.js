@@ -23,8 +23,8 @@ const CiudadVerClima = ({
           </Text>
         </View>
         <View>
-          <Icon name="eye" size={40} style={textColor} onPress={onIconPress} />
-          <Icon name="delete" size={40} style={textColor} onPress={onDelete} />
+          <Icon name="eye" size={32} style={textColor} onPress={onIconPress} />
+          <Icon name="delete" size={32} style={textColor} onPress={onDelete} />
         </View>
       </View>
     </TouchableOpacity>

@@ -56,6 +56,7 @@ https://www.iconfinder.com/iconsets/the-weather-is-nice-today
 https://www.iconfinder.com/iconsets/weatherful
 https://www.iconfinder.com/iconsets/weather-filled-outline-6
 https://www.iconfinder.com/iconsets/weather-344
+https://github.com/basmilius/weather-icons/tree/master/production/line/openweathermap SVG Animados
 
 # 13-Curso para hacer una app de clima
 https://www.youtube.com/playlist?list=PLX7mEGqtfnSqWWUM-rvdrrTV1_7RFaJsA

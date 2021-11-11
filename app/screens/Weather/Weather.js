@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {
+  FlatList,
   Image,
+  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -9,13 +11,15 @@ import {
 } from 'react-native';
 import Loading from '../../components/Loading';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import Weatherful from '../../assets/weather_icons/weatherful/Weatherful';
+import PronosticoFuturo from '../../components/PronosticoFuturo';
+//import Weatherful from '../../assets/weather_icons/weather_is_fine/WeatherIsFine';
 
 const Weather = props => {
   const [weatherInfo, setWeatherInfo] = useState({});
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState('');
   const apiID = 'cd490bb97cc34009fc11c794901e643d';
-  const [imgPronostico, setImgPronostico] = useState({});
 
   useEffect(() => {
     getWeatherData(props.route.params);
@@ -38,13 +42,13 @@ const Weather = props => {
       'SE',
       'SSE',
       'S',
-      'SSW',
-      'SW',
-      'WSW',
-      'W',
-      'WNW',
-      'NW',
-      'NNW',
+      'SSO',
+      'SO',
+      'OSO',
+      'O',
+      'ONO',
+      'NO',
+      'NNO',
     ];
     return arr[val % 16];
   }
@@ -56,33 +60,92 @@ const Weather = props => {
   const getWeatherData = async city => {
     setLoadingText('Recuperando pronóstico');
     setLoading(true);
-    const result = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?id=${city.id}&appid=${apiID}&units=metric&lang=es`,
-    )
+
+    // const apiUrlCityID = `https://api.openweathermap.org/data/2.5/weather?id=${city.id}&appid=${apiID}&units=metric&lang=es`;
+
+    const apiUrlLatLon = `https://api.openweathermap.org/data/2.5/onecall?lat=${city.lat}&lon=${city.lon}&exclude=minutely,hourly&appid=${apiID}&units=metric&lang=es`;
+
+    const result = await fetch(apiUrlLatLon)
       .then(response => response.json())
       .then(data => {
         //console.log(data);
         setWeatherInfo({
-          condicion: data.weather[0].main,
-          descripcion: capitalize(data.weather[0].description),
-          icono: {
-            uri: `http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`,
-          },
-          temp: data.main.temp.toFixed(1),
-          termica: data.main.feels_like.toFixed(1),
-          temp_max: data.main.temp_max.toFixed(1),
-          temp_min: data.main.temp_min.toFixed(1),
-          presion: data.main.pressure,
-          humedad: data.main.humidity,
-          visibilidad: data.main.visibility,
-          viento_vel: data.wind.speed,
-          viento_dir: degToCompass(data.wind.deg),
-          viento_angulo: data.wind.deg,
-          amanecer: data.sys.sunrise,
-          ocaso: data.sys.sunset,
-        });
-        setImgPronostico({
-          uri: `http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`,
+          condicion: data.current.weather[0].main,
+          descripcion: capitalize(data.current.weather[0].description),
+          icono: Weatherful[`_${data.current.weather[0].icon}`],
+          // {
+          //   uri: `http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`,
+          // },
+          temp: data.current.temp.toFixed(1),
+          termica: data.current.feels_like.toFixed(1),
+          temp_max: data.daily[0].temp.max.toFixed(1),
+          temp_min: data.daily[0].temp.min.toFixed(1),
+          presion: data.current.pressure,
+          humedad: data.current.humidity,
+          visibilidad: data.current.visibility,
+          viento_vel: data.current.wind_speed,
+          viento_dir: degToCompass(data.current.wind_deg),
+          viento_angulo: data.current.wind_deg,
+          amanecer: data.current.sunrise,
+          ocaso: data.current.sunset,
+          pronostico: [
+            // {
+            //   id: 0,
+            //   dt: data.daily[0].dt,
+            //   icono: Weatherful[`_${data.daily[0].weather[0].icon}`],
+            //   descripcion: capitalize(data.daily[0].weather[0].description),
+            //   temp_max: data.daily[0].temp.max.toFixed(1),
+            //   temp_min: data.daily[0].temp.min.toFixed(1),
+            // },
+            {
+              id: 1,
+              dt: data.daily[1].dt,
+              icono: Weatherful[`_${data.daily[1].weather[0].icon}`],
+              descripcion: capitalize(data.daily[1].weather[0].description),
+              temp_max: data.daily[1].temp.max.toFixed(1),
+              temp_min: data.daily[1].temp.min.toFixed(1),
+            },
+            {
+              id: 2,
+              dt: data.daily[2].dt,
+              icono: Weatherful[`_${data.daily[2].weather[0].icon}`],
+              descripcion: capitalize(data.daily[2].weather[0].description),
+              temp_max: data.daily[2].temp.max.toFixed(1),
+              temp_min: data.daily[2].temp.min.toFixed(1),
+            },
+            {
+              id: 3,
+              dt: data.daily[3].dt,
+              icono: Weatherful[`_${data.daily[3].weather[0].icon}`],
+              descripcion: capitalize(data.daily[3].weather[0].description),
+              temp_max: data.daily[3].temp.max.toFixed(1),
+              temp_min: data.daily[3].temp.min.toFixed(1),
+            },
+            {
+              id: 4,
+              dt: data.daily[4].dt,
+              icono: Weatherful[`_${data.daily[4].weather[0].icon}`],
+              descripcion: capitalize(data.daily[4].weather[0].description),
+              temp_max: data.daily[4].temp.max.toFixed(1),
+              temp_min: data.daily[4].temp.min.toFixed(1),
+            },
+            {
+              id: 5,
+              dt: data.daily[5].dt,
+              icono: Weatherful[`_${data.daily[5].weather[0].icon}`],
+              descripcion: capitalize(data.daily[5].weather[0].description),
+              temp_max: data.daily[5].temp.max.toFixed(1),
+              temp_min: data.daily[5].temp.min.toFixed(1),
+            },
+            {
+              id: 6,
+              dt: data.daily[6].dt,
+              icono: Weatherful[`_${data.daily[6].weather[0].icon}`],
+              descripcion: capitalize(data.daily[6].weather[0].description),
+              temp_max: data.daily[6].temp.max.toFixed(1),
+              temp_min: data.daily[6].temp.min.toFixed(1),
+            },
+          ],
         });
         setLoading(false);
       })
@@ -91,6 +154,18 @@ const Weather = props => {
         showToast('Error al realizar la búsqueda');
         setLoading(false);
       });
+  };
+
+  const renderPronostico = ({item}) => {
+    return (
+      <PronosticoFuturo
+        item={item}
+        //onPress={() => setSelectedId(item.id)}
+        //backgroundColor={{backgroundColor}}
+        //textColor={{color}}
+        //onIconPress={() => createTwoButtonAlert(item)}
+      />
+    );
   };
 
   return (
@@ -111,8 +186,8 @@ const Weather = props => {
           <View style={styles.containerTemp}>
             <Text style={styles.temp}>{weatherInfo.temp} °C</Text>
             <View>
-              <Text style={styles.maxMin}>Min: {weatherInfo.temp_min} °C</Text>
-              <Text style={styles.maxMin}>Max: {weatherInfo.temp_max} °C</Text>
+              <Text style={styles.max}>Max: {weatherInfo.temp_max} °C</Text>
+              <Text style={styles.min}>Min: {weatherInfo.temp_min} °C</Text>
             </View>
           </View>
           <Text style={styles.termica}>
@@ -138,7 +213,17 @@ const Weather = props => {
         </View>
         <Loading isVisible={loading} text={loadingText} />
       </View>
-      <View style={styles.containerExtendido}></View>
+      <View style={styles.containerExtendido}>
+        <Text style={styles.titleExtendido}>Pronóstico Extendiddo</Text>
+        <SafeAreaView>
+          <FlatList
+            horizontal
+            data={weatherInfo.pronostico}
+            renderItem={renderPronostico}
+            keyExtractor={item => item.id}
+            style={{height: '100%'}}></FlatList>
+        </SafeAreaView>
+      </View>
     </>
   );
 };
@@ -186,8 +271,14 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  maxMin: {
+  max: {
     color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  min: {
+    color: 'white',
+    fontSize: 14,
     marginTop: 4,
   },
   condicion: {
@@ -219,6 +310,13 @@ const styles = StyleSheet.create({
   containerExtendido: {
     flex: 0.35,
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
+  },
+  titleExtendido: {
+    color: 'white',
+    fontSize: 20,
+    padding: 5,
+    paddingLeft: 10,
+    fontWeight: 'bold',
   },
 });
 
