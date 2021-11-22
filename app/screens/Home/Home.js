@@ -127,6 +127,8 @@ const Home = ({navigation}) => {
       <View style={styles.container}>
         <SafeAreaView style={styles.container}>
           <FlatList
+            numColumns={2}
+            columnWrapperStyle={styles.listColumn}
             data={cityList}
             renderItem={renderItem}
             keyExtractor={item => item.id}
@@ -149,6 +151,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1f1c22',
+  },
+  listColumn: {
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
   btn: {
     display: 'flex',

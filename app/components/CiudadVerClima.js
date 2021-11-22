@@ -13,6 +13,7 @@ const CiudadVerClima = ({
   return (
     <TouchableOpacity
       onPress={onPress, onIconPress}
+      activeOpacity={0.75}
       style={[styles.item, backgroundColor]}
     >
       <View style={styles.form_row}>
@@ -43,15 +44,18 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 10,
-    marginVertical: 5,
-    marginHorizontal: 5,
+    minHeight: 180,
+    borderRadius: 10,
+    width: '47%',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginBottom: 2,
   },
   detail: {
     fontSize: 12,
+    marginBottom: 2,
   },
   deleteIcon: {
     position: 'absolute',
