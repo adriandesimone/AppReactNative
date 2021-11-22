@@ -11,7 +11,10 @@ const CiudadVerClima = ({
   onDelete,
 }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
+    <TouchableOpacity
+      onPress={onPress, onIconPress}
+      style={[styles.item, backgroundColor]}
+    >
       <View style={styles.form_row}>
         <View style={styles.view_content}>
           <Text style={[styles.title, textColor]}>
@@ -23,8 +26,7 @@ const CiudadVerClima = ({
           </Text>
         </View>
         <View>
-          <Icon name="eye" size={32} style={textColor} onPress={onIconPress} />
-          <Icon name="delete" size={32} style={textColor} onPress={onDelete} />
+          <Icon name="close" size={18} style={[styles.deleteIcon, textColor]} onPress={onDelete} />
         </View>
       </View>
     </TouchableOpacity>
@@ -50,6 +52,13 @@ const styles = StyleSheet.create({
   },
   detail: {
     fontSize: 12,
+  },
+  deleteIcon: {
+    position: 'absolute',
+    borderRadius: 100,
+    top: -13,
+    right: -28,
+    padding: 9,
   },
 });
 
