@@ -14,8 +14,8 @@ export default function PronosticoFuturo({item}) {
     weekdaysShort: 'Dom_Lun_Mar_Mie_Jue_Vie_Sab'.split('_'),
     weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_'),
   });
-  const fechaMoment = `${Moment(new Date(item.dt * 1000)).format('ddd DD MMM')}
-  ${Moment(new Date(item.dt * 1000)).format('YYYY')}`;
+
+  const fechaMoment = `${Moment(new Date(item.dt * 1000)).format('ddd DD MMM')}`;
 
   return (
     <>
@@ -36,25 +36,31 @@ export default function PronosticoFuturo({item}) {
 
 const styles = StyleSheet.create({
   containerPronostico: {
-    margin: 5,
-    paddingLeft: 5,
-    paddingRight: 5,
-    borderColor: '#fff',
+    marginHorizontal: 8,
+    paddingHorizontal: 10,
     borderRadius: 10,
-    borderWidth: 1,
-    height: '80%',
-    justifyContent: 'center',
-  },
-  imgWeather: {
-    width: 75,
-    height: 75,
-    alignSelf: 'center',
+    height: '96%',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#1f1c22',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   dia: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
     textAlign: 'center',
+  },
+  imgWeather: {
+    width: 75,
+    height: 75,
+    alignSelf: 'center',
   },
   descripcion: {
     color: 'white',
@@ -68,7 +74,7 @@ const styles = StyleSheet.create({
   max: {
     fontWeight: 'bold',
     color: 'white',
-    marginTop: 2,
+    marginBottom: 1,
     textAlign: 'center',
   },
   min: {

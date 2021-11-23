@@ -175,105 +175,123 @@ const Weather = props => {
         backgroundColor="#664479"
         barStyle="light-content"
       />
-      <View style={styles.containerActual}>
-        <View style={styles.containerMain}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.containerActual}>
           <Text style={styles.title}>
             {props.route.params.name} ({props.route.params.country})
           </Text>
-          <Image source={weatherInfo.icono} style={styles.imgWeather} />
-          {/* <Text style={styles.condicion}>{weatherInfo.condicion}</Text> */}
-          <Text style={styles.descripcion}>{weatherInfo.descripcion}</Text>
-          <View style={styles.containerTemp}>
-            <Text style={styles.temp}>{weatherInfo.temp} °C</Text>
-            <View>
+          <View style={styles.containerMain}>
+            <View style={styles.containerTemp}>
+              <Text style={styles.temp}>{weatherInfo.temp} °C</Text>
               <Text style={styles.max}>Max: {weatherInfo.temp_max} °C</Text>
               <Text style={styles.min}>Min: {weatherInfo.temp_min} °C</Text>
             </View>
+            <View style={styles.containerImg}>
+              <Image source={weatherInfo.icono} style={styles.imgWeather} />
+              {/* <Text style={styles.condicion}>{weatherInfo.condicion}</Text> */}
+              <Text style={styles.descripcion}>{weatherInfo.descripcion}</Text>
+            </View>
           </View>
-          <Text style={styles.termica}>
+          {/* <Text style={styles.termica}>
             Sensación Térmica: {weatherInfo.termica} °C
-          </Text>
+          </Text> */}
+          <View style={styles.containerOtros}>
+            <Text style={styles.infoOtros}>
+              S. Térm.
+              {'\n'}
+              {weatherInfo.termica} °C
+            </Text>
+            <Text style={styles.infoOtros}>
+              <Icon name="water-percent" size={30} color="#fff" />
+              {'\n'}
+              {weatherInfo.humedad}
+            </Text>
+            <Text style={styles.infoOtros}>
+              <Icon name="waves" size={30} color="#fff" />
+              {'\n'}
+              {weatherInfo.presion} hPa
+            </Text>
+            <Text style={styles.infoOtros}>
+              <Icon name="compass" size={30} color="#fff" />
+              {'\n'}
+              {weatherInfo.viento_vel}m/s {weatherInfo.viento_dir}
+            </Text>
+          </View>
+          <Loading isVisible={loading} text={loadingText} />
         </View>
-        <View style={styles.containerOtros}>
-          <Text style={styles.infoOtros}>
-            <Icon name="water-percent" size={24} color="#fff" />
-            {'\n'}
-            {weatherInfo.humedad}
-          </Text>
-          <Text style={styles.infoOtros}>
-            <Icon name="waves" size={24} color="#fff" />
-            {'\n'}
-            {weatherInfo.presion} hPa
-          </Text>
-          <Text style={styles.infoOtros}>
-            <Icon name="compass" size={24} color="#fff" />
-            {'\n'}
-            {weatherInfo.viento_vel} m/s {weatherInfo.viento_dir}
-          </Text>
-        </View>
-        <Loading isVisible={loading} text={loadingText} />
-      </View>
-      <View style={styles.containerExtendido}>
-        <Text style={styles.titleExtendido}>Pronóstico Extendiddo</Text>
-        <SafeAreaView>
+        <View style={styles.containerExtendido}>
+          <Text style={styles.titleExtendido}>Pronóstico Extendiddo</Text>
           <FlatList
             horizontal
             data={weatherInfo.pronostico}
             renderItem={renderPronostico}
             keyExtractor={item => item.id}
-            style={{height: '100%'}}></FlatList>
-        </SafeAreaView>
-      </View>
+            style={{ height: '100%' }}>
+          </FlatList>
+        </View>
+        {/* </ScrollView> */}
+      </SafeAreaView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  containerActual: {
-    flex: 0.65,
+  container: {
+    flex: 1,
   },
-  containerMain: {
-    alignSelf: 'center',
-    width: 330,
-    marginTop: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
-    borderColor: '#fff',
-    borderRadius: 10,
-    borderWidth: 1,
+  containerActual: {
+    flex: 0.6,
+    justifyContent: 'space-evenly',
   },
   title: {
+    flexGrow: 0,
     color: 'white',
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 15,
   },
-  text: {
-    color: 'white',
+  containerMain: {
+    alignSelf: 'center',
+    flexDirection: 'row',
+    flexGrow: 0.6,
+    justifyContent: 'space-around',
+    width: '95%',
+    paddingTop: 10,
+    paddingBottom: 15,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#fff1',
+  },
+  containerTemp: {
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    width: '50%',
+  },
+  containerImg: {
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    width: '50%',
   },
   imgWeather: {
-    width: 150,
-    height: 150,
-    alignSelf: 'center',
+    marginTop: -20,
+    marginBottom: -15,
+    width: 130,
+    height: 130,
   },
   descripcion: {
     color: 'white',
-    fontSize: 22,
+    fontSize: 20,
     textAlign: 'center',
-  },
-  containerTemp: {
-    flexDirection: 'row',
-    alignSelf: 'center',
   },
   temp: {
     color: 'white',
-    fontSize: 36,
-    paddingLeft: 20,
-    paddingRight: 20,
+    fontSize: 38,
   },
   max: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   min: {
@@ -281,41 +299,45 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 4,
   },
-  condicion: {
-    color: 'white',
-    fontSize: 24,
-  },
   termica: {
-    paddingTop: 10,
+    paddingTop: 15,
     color: 'white',
     textAlign: 'center',
   },
   containerOtros: {
-    paddingTop: 20,
+    flexGrow: 1,
+    marginTop: 16,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
     alignSelf: 'center',
+    width: '100%',
   },
   infoOtros: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 16,
+    lineHeight: 30,
     textAlign: 'center',
     textAlignVertical: 'center',
     width: 90,
-    height: 90,
-    margin: 10,
-    borderColor: '#fff',
+    height: 95,
+    borderColor: '#fff8',
     borderRadius: 10,
     borderWidth: 1,
   },
   containerExtendido: {
-    flex: 0.35,
-    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+    marginTop: 5,
+    flex: 0.4,
+    backgroundColor: '#fff1',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   titleExtendido: {
     color: 'white',
     fontSize: 18,
-    padding: 5,
-    paddingLeft: 10,
+    marginLeft: 10,
+    paddingTop: 8,
+    paddingBottom: 8,
     fontWeight: 'bold',
   },
 });
