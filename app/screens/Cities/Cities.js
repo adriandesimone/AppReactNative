@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  ScrollView,
   ToastAndroid,
   Text,
   TextInput,
@@ -148,7 +147,7 @@ const Cities = ({navigation}) => {
         backgroundColor="#664479"
         barStyle="light-content"
       />
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Formik
           initialValues={{city: ''}}
           validationSchema={searchSchema}
@@ -184,16 +183,16 @@ const Cities = ({navigation}) => {
             </View>
           )}
         </Formik>
-        <SafeAreaView style={styles.container}>
+        <View style={styles.resultsContainer}>
           <FlatList
             data={cityList}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             extraData={selectedId}
           />
-        </SafeAreaView>
+        </View>
         <Loading isVisible={loading} text={loadingText} />
-      </View>
+      </SafeAreaView>
     </>
   );
 };
@@ -202,33 +201,41 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1f1c22',
+    padding: 12,
+    paddingBottom: 0,
   },
-  scroll: {
-    paddingHorizontal: 5,
+  resultsContainer: {
+    flex: 1,
+    backgroundColor: '#1f1c22',
+    padding: 0,
   },
   form_group: {
     flexDirection: 'row',
-    marginBottom: 30,
-    marginTop: 10,
+    marginTop: 15,
     alignItems: 'stretch',
   },
   container_text_error: {
-    width: '80%',
+    flex: 1,
+    marginRight: 10,
   },
   form_input: {
     borderBottomColor: '#e3e3e3',
     color: '#fff',
     borderBottomWidth: 1,
     paddingHorizontal: 10,
+    height: 55,
+    fontSize: 18,
+    textAlignVertical: 'bottom',
   },
   btn: {
-    flex: 1,
     display: 'flex',
     backgroundColor: '#68477c',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 36,
-    borderRadius: 5,
+    height: 55,
+    width: 55,
+    marginBottom: 35,
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -243,8 +250,9 @@ const styles = StyleSheet.create({
   },
   error: {
     fontWeight: 'bold',
-    fontSize: 13,
-    color: '#850000',
+    fontSize: 15,
+    color: '#a00',
+    textAlign: 'center',
   },
 });
 
