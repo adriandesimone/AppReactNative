@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 const CiudadAgregar = ({
   item,
@@ -10,8 +9,7 @@ const CiudadAgregar = ({
   onIconPress,
 }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-      <View style={styles.form_row}>
+    <TouchableOpacity onPress={onPress, onIconPress} style={[styles.item, backgroundColor]}>
         <View style={styles.view_content}>
           <Text style={[styles.title, textColor]}>
             {item.name} ({item.country})
@@ -21,31 +19,18 @@ const CiudadAgregar = ({
             Lat: {item.lat} - Lon: {item.lon}
           </Text>
         </View>
-        <View>
-          <Icon
-            name="plus-circle"
-            size={44}
-            style={textColor}
-            onPress={onIconPress}
-          />
-        </View>
-      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  form_row: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-  },
-  view_content: {
-    width: '90%',
-  },
   item: {
     padding: 10,
-    marginVertical: 5,
-    marginHorizontal: 5,
+    marginBottom: 12,
+    borderRadius: 10,
+  },
+  view_content: {
+    // width: '90%',
   },
   title: {
     fontSize: 20,
