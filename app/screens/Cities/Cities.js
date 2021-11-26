@@ -49,6 +49,9 @@ const Cities = ({navigation}) => {
               country: item.sys.country,
               lat: item.coord.lat,
               lon: item.coord.lon,
+              temp: item.main.temp,
+              icon: item.weather[0].icon,
+              date: Date.now(),
             };
             setCityList(cityList => [...cityList, city]);
           });
