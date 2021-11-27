@@ -21,6 +21,8 @@ const Home = ({navigation}) => {
   const [loadingText, setLoadingText] = useState('');
   const [cityList, setCityList] = useState([]);
   const isFocused = useIsFocused();
+  //FIXME: Revisar apiID ya que no es la misma para colocar de forma global
+  const apiID = 'cd490bb97cc34009fc11c794901e643d';
 
   useEffect(() => {
     if (isFocused) loadCities();
@@ -34,7 +36,23 @@ const Home = ({navigation}) => {
       const storage = await AsyncStorage.getItem('cities');
       if (storage) {
         cities = JSON.parse(storage);
-        setCityList(cities);
+        const citiesAll = await Promise.all(
+          cities.map(async (city) => {
+            const api = `https://api.openweathermap.org/data/2.5/weather?id=${city.id}&appid=${apiID}`;
+            try {
+              const response = await fetch(api);
+              const data = await response.json();
+              if (data) {
+                return { ...city, icon: data.weather[0].icon, temp: data.main.temp };
+              }
+            } catch (error) {
+              console.log(error);
+              return city
+            }
+          })
+        );
+        
+        setCityList(citiesAll);
         // console.log(cities);
         setLoading(false);
       }
