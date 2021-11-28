@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CiudadAgregar from '../../components/CiudadAgregar';
 import Loading from '../../components/Loading';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import Weatherful from '../../assets/weather_icons/weatherful/Weatherful';
 
 const Cities = ({navigation}) => {
   const [selectedId, setSelectedId] = useState(null);
@@ -49,6 +50,9 @@ const Cities = ({navigation}) => {
               country: item.sys.country,
               lat: item.coord.lat,
               lon: item.coord.lon,
+              temp: item.main.temp,
+              icon:  Weatherful[`_${item.weather[0].icon}`],
+              date: Date.now(),
             };
             setCityList(cityList => [...cityList, city]);
           });
@@ -126,8 +130,8 @@ const Cities = ({navigation}) => {
   };
 
   const renderItem = ({item}) => {
-    const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#f9c2ff';
-    const color = item.id === selectedId ? 'white' : 'black';
+    const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#4d305e';
+    const color = 'white'
 
     return (
       <CiudadAgregar
