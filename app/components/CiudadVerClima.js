@@ -25,9 +25,7 @@ const CiudadVerClima = ({
             <>
               <Image
                 style={styles.imgWeather}
-                source={{
-                  uri: `http://openweathermap.org/img/w/${item.icon}.png`,
-                }}
+                source={item.icon} 
               />
               <Text style={styles.temp}>
                 {parseInt(item.temp - 273.15)} &#x2103;

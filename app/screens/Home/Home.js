@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CiudadVerClima from '../../components/CiudadVerClima';
 import Loading from '../../components/Loading';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import Weatherful from '../../assets/weather_icons/weatherful/Weatherful';
 
 const Home = ({navigation}) => {
   const [selectedId, setSelectedId] = useState(null);
@@ -43,7 +44,7 @@ const Home = ({navigation}) => {
               const response = await fetch(api);
               const data = await response.json();
               if (data) {
-                return { ...city, icon: data.weather[0].icon, temp: data.main.temp };
+                return { ...city, icon: Weatherful[`_${data.weather[0].icon}`], temp: data.main.temp };
               }
             } catch (error) {
               console.log(error);

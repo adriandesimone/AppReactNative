@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CiudadAgregar from '../../components/CiudadAgregar';
 import Loading from '../../components/Loading';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import Weatherful from '../../assets/weather_icons/weatherful/Weatherful';
 
 const Cities = ({navigation}) => {
   const [selectedId, setSelectedId] = useState(null);
@@ -50,7 +51,7 @@ const Cities = ({navigation}) => {
               lat: item.coord.lat,
               lon: item.coord.lon,
               temp: item.main.temp,
-              icon: item.weather[0].icon,
+              icon:  Weatherful[`_${item.weather[0].icon}`],
               date: Date.now(),
             };
             setCityList(cityList => [...cityList, city]);
