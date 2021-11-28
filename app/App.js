@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Animated, StatusBar, StyleSheet, View} from 'react-native';
+import {Animated, StatusBar, StyleSheet, View, SafeAreaView} from 'react-native';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -44,7 +44,7 @@ const App = () => {
           backgroundColor="#664479"
           barStyle="light-content"
         />
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <View style={styles.containerLogo}>
             <Animated.Image
               source={ClimaLogo}
@@ -59,7 +59,7 @@ const App = () => {
               Aplicación para gestionar el clima de distintas ciudades
             </Animated.Text>
           </View>
-        </View>
+        </SafeAreaView>
       </>
     );
   } else {
@@ -117,32 +117,35 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#1f1c22',
-    justifyContent: 'space-between',
+    padding: 20,
   },
   containerLogo: {
     flex: 0.6,
-  },
-  containerText: {
-    flex: 0.4,
+    justifyContent: "flex-end",
+    alignItems: 'center',
   },
   image: {
-    marginTop: '35%',
-    width: 256,
-    height: 256,
+    height: '70%',
     resizeMode: 'contain',
+  },
+
+  containerText: {
+    flex: 0.4,
+    justifyContent: 'flex-start',
+    width: '100%',
   },
   text: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 50,
+    fontSize: 48,
+    marginTop: 20,
   },
   textSmall: {
     textAlign: 'center',
     color: '#c2c2c2',
     fontSize: 16,
-    marginTop: 5,
+    marginTop: 10,
   },
 });
 
