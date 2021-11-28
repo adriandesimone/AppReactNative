@@ -22,29 +22,25 @@ const CiudadVerClima = ({
             {item.name} ({item.country})
           </Text>
           {item.icon && item.temp ? (
-          <View style={styles.weather_row}>
-            <View>
+            <>
               <Image
-                style={{width: 40, height: 50}}
+                style={styles.imgWeather}
                 source={{
                   uri: `http://openweathermap.org/img/w/${item.icon}.png`,
                 }}
               />
-            </View>
-            <View style={[styles.weather_row, {paddingLeft: 8}]}>
-              <Text style={styles.weather_detail}>
+              <Text style={styles.temp}>
                 {parseInt(item.temp - 273.15)} &#x2103;
               </Text>
-            </View>
-          </View>
-        ) : (
-          <View>
-            <Text style={[styles.detail, textColor]}>ID: {item.id}</Text>
-            <Text style={[styles.detail, textColor]}>
-              Lat: {item.lat} - Lon: {item.lon}
-            </Text>
-          </View>
-        )}
+            </>
+          ) : (
+            <>
+              <Text style={[styles.detail, textColor]}>ID: {item.id}</Text>
+              <Text style={[styles.detail, textColor]}>
+                Lat: {item.lat} - Lon: {item.lon}
+              </Text>
+            </>
+          )}
         </View>
         <View>
           <Icon name="close" size={18} style={[styles.deleteIcon, textColor]} onPress={onDelete} />
@@ -55,23 +51,43 @@ const CiudadVerClima = ({
 };
 
 const styles = StyleSheet.create({
-  form_row: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-  },
-  view_content: {
-    width: '90%',
-  },
   item: {
     padding: 10,
+    paddingTop: 15,
     minHeight: 180,
     borderRadius: 10,
     width: '47%',
   },
+  form_row: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+  },
+  view_content: {
+    width: '100%',
+    height: 180,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    textAlign: 'center',
     marginBottom: 2,
+    height: 50,
+  },
+  imgWeather: {
+    alignSelf: 'center',
+    marginTop: -15,
+    marginBottom: -15,
+    width: 100,
+    height: 100,
+  },
+  temp: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 28,
+    textAlign: 'center',
   },
   detail: {
     fontSize: 12,
@@ -80,17 +96,9 @@ const styles = StyleSheet.create({
   deleteIcon: {
     position: 'absolute',
     borderRadius: 100,
-    top: -13,
-    right: -28,
+    top: -18,
+    right: -12,
     padding: 9,
-  },
-  weather_row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  weather_detail: {
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 

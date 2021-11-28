@@ -117,8 +117,8 @@ const Home = ({navigation}) => {
   };
 
   const renderItem = ({item}) => {
-    const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#f9c2ff';
-    const color = item.id === selectedId ? 'white' : 'black';
+    const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#4d305e';
+    const color = 'white';
 
     return (
       <CiudadVerClima
