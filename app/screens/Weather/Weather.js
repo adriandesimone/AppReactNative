@@ -8,6 +8,7 @@ import {
   Text,
   ToastAndroid,
   View,
+  ScrollView,
 } from 'react-native';
 import Loading from '../../components/Loading';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
@@ -176,6 +177,7 @@ const Weather = props => {
         barStyle="light-content"
       />
       <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContentContainer}>
         <View style={styles.containerActual}>
           <Text style={styles.title}>
             {props.route.params.name} ({props.route.params.country})
@@ -229,7 +231,7 @@ const Weather = props => {
             style={{ height: '100%' }}>
           </FlatList>
         </View>
-        {/* </ScrollView> */}
+        </ScrollView>
       </SafeAreaView>
     </>
   );
@@ -242,6 +244,9 @@ const styles = StyleSheet.create({
   containerActual: {
     flex: 0.6,
     justifyContent: 'space-evenly',
+  },
+  scrollContentContainer: {
+    flexGrow: 1,
   },
   title: {
     flexGrow: 0,
