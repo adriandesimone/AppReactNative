@@ -8,6 +8,7 @@ import {
   Text,
   ToastAndroid,
   View,
+  ScrollView
 } from 'react-native';
 import Loading from '../../components/Loading';
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
@@ -190,6 +191,7 @@ const Weather = props => {
               <Image source={weatherInfo.icono} style={styles.imgWeather} />
               {/* <Text style={styles.condicion}>{weatherInfo.condicion}</Text> */}
               <Text style={styles.descripcion}>{weatherInfo.descripcion}</Text>
+        <ScrollView contentContainerStyle={styles.scrollContentContainer}>
             </View>
           </View>
           {/* <Text style={styles.termica}>
@@ -229,7 +231,7 @@ const Weather = props => {
             style={{ height: '100%' }}>
           </FlatList>
         </View>
-        {/* </ScrollView> */}
+        </ScrollView>
       </SafeAreaView>
     </>
   );
@@ -238,6 +240,9 @@ const Weather = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollContentContainer: {
+    flexGrow: 1,
   },
   containerActual: {
     flex: 0.6,
