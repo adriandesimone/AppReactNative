@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {Animated, StatusBar, StyleSheet, View, SafeAreaView} from 'react-native';
+import {Animated, StatusBar, StyleSheet, View, SafeAreaView, TouchableOpacity} from 'react-native';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 
 import ClimaLogo from './assets/weather_icon.png';
 import Home from './screens/Home/Home';
 import Cities from './screens/Cities';
 import Weather from './screens/Weather/Weather';
+import Info from './screens/Info/Info';
 
 const Stack = createNativeStackNavigator();
 
@@ -69,8 +71,17 @@ const App = () => {
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{
+            options={({navigation})=>({
               title: 'Mis Ciudades',
+              headerRight: () => (
+                <TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.infoBtn}
+                onPress={() => navigation.navigate('Info')}
+                >
+                <Icon name="information-variant" size={28} color="#fff" />
+              </TouchableOpacity>
+              ),
               headerStyle: {
                 backgroundColor: '#4d305e',
               },
@@ -78,7 +89,7 @@ const App = () => {
               headerTitleStyle: {
                 fontWeight: 'bold',
               },
-            }}
+            })}
           />
           <Stack.Screen
             name="Cities"
@@ -99,6 +110,20 @@ const App = () => {
             component={Weather}
             options={{
               title: 'Pronóstico',
+              headerStyle: {
+                backgroundColor: '#4d305e',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Info"
+            component={Info}
+            options={{
+              title: 'Sobre la App',
               headerStyle: {
                 backgroundColor: '#4d305e',
               },
@@ -146,6 +171,25 @@ const styles = StyleSheet.create({
     color: '#c2c2c2',
     fontSize: 16,
     marginTop: 10,
+  },
+  infoBtn: {
+    display: 'flex',
+    position: 'absolute',
+    backgroundColor: '#68477c',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 30,
+    height: 30,
+    borderRadius: 100,
+    right: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 
