@@ -1,5 +1,11 @@
 # Aplicación de Clima
-Este proyecto es una aplicación que muestra datos climáticos de ciudades elegidas por el usuario, el usuario puede buscar y guardar ciudades para consultar luego el clima con un pronostico hasta 5 días.
+Este proyecto es una aplicación que muestra datos climáticos de ciudades elegidas por el usuario, el usuario puede buscar y guardar ciudades para consultar luego el clima con un pronostico hasta 6 días.
+
+# Prototyping y Persona Canvas
+El prototipo fue realizado en Figma, no es necesario instalar el programa, se puede ver online desde el siguiente link [Ver Prototipo y Persona Canvas Online](https://www.figma.com/file/RbcUfuYrI8hzPMzERBanGT/weather-app-(Community)?node-id=0%3A1)
+
+# Vista Previa Proyecto
+![image description](climaapp.gif)
 
 # Requisitos
 Antes de comenzar, necesitará las siguientes herramientas instaladas en su equipo: [Git](https://git-scm.com/) y [Node.js > v12](https://nodejs.org/en/).
