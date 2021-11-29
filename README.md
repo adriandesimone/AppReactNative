@@ -36,7 +36,7 @@ o
 yarn ios
 ```
 
-#Herramientas
+# Herramientas
 Se utilizaron las siguientes herramientas en la elaboracion del proyecto:
 
 * [React Native](https://reactnative.dev/)
