@@ -23,7 +23,29 @@ const Weather = props => {
       />
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContentContainer}>
-          <Text style={styles.title}>Informacion</Text>
+          <Text style={styles.title}>Sobre la aplicación</Text>
+          <Text style={styles.descripcion}>
+          En ClimApp podrás ver de manera rápida y ágil los datos climáticos dentro de un listado personalizable de localidades.
+          </Text>
+          <Text style={styles.subtitle}>Modo de uso:</Text>
+          <Text style={styles.descripcion}>
+          {`\u2022`} Tocar en <Icon style={styles.btn} name="plus" size={20} color="#fff" /> para agregar una localidad.
+          </Text>
+          <Text style={styles.descripcion}>
+          {`\u2022`} Escribir el nombre de la localidad en el buscador y luego tocar <Icon style={styles.btn} name="magnify" size={20} color="#fff" />
+          </Text>
+          <Text style={styles.descripcion}>
+          {`\u2022`} Dentro los resultados, seleccionar la localidad deseada.
+          </Text>
+          <Text style={styles.descripcion}>
+          {`\u2022`} Tocar en <Icon style={styles.btn} name="arrow-left" size={20} color="#fff" />
+          </Text>
+          <Text style={styles.descripcion}>
+          {`\u2022`} Tocando una localidad podemos ver el detalle de los datos climaticos actuales y pronóstico.
+          </Text>
+          <Text style={styles.descripcion}>
+          {`\u2022`} Para quitar una localidad del listado solo debemos tocar en <Icon style={styles.btn} name="close" size={20} color="#fff" />
+          </Text>
         </ScrollView>
       </SafeAreaView>
     </>
@@ -36,6 +58,7 @@ const styles = StyleSheet.create({
   },
   scrollContentContainer: {
     flexGrow: 1,
+    marginHorizontal: 30,
   },
   title: {
     flexGrow: 0,
@@ -43,96 +66,31 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 15,
   },
-  containerMain: {
-    alignSelf: 'center',
-    flexDirection: 'row',
-    flexGrow: 0.6,
-    justifyContent: 'space-around',
-    width: '95%',
-    paddingTop: 10,
-    paddingBottom: 15,
-    paddingHorizontal: 10,
-    borderRadius: 10,
-    backgroundColor: '#fff1',
-  },
-  containerTemp: {
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    width: '50%',
-  },
-  containerImg: {
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    width: '50%',
-  },
-  imgWeather: {
-    marginTop: -20,
-    marginBottom: -15,
-    width: 130,
-    height: 130,
+  subtitle: {
+    flexGrow: 0,
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 5,
   },
   descripcion: {
     color: 'white',
-    fontSize: 20,
-    textAlign: 'center',
-  },
-  temp: {
-    color: 'white',
-    fontSize: 38,
-  },
-  max: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  min: {
-    color: 'white',
-    fontSize: 14,
-    marginTop: 4,
-  },
-  termica: {
-    paddingTop: 15,
-    color: 'white',
-    textAlign: 'center',
-  },
-  containerOtros: {
-    flexGrow: 1,
-    marginTop: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    alignSelf: 'center',
-    width: '100%',
-  },
-  infoOtros: {
-    color: 'white',
-    fontSize: 16,
-    lineHeight: 30,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    width: 90,
-    height: 95,
-    borderColor: '#fff8',
-    borderRadius: 10,
-    borderWidth: 1,
-  },
-  containerExtendido: {
-    marginTop: 5,
-    flex: 0.4,
-    backgroundColor: '#fff1',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-  },
-  titleExtendido: {
-    color: 'white',
     fontSize: 18,
-    marginLeft: 10,
-    paddingTop: 8,
-    paddingBottom: 8,
-    fontWeight: 'bold',
+    textAlign: 'justify',
+  },
+  btn: {
+    display: 'flex',
+    position: 'absolute',
+    backgroundColor: '#68477c',
+    // justifyContent: 'center',
+    alignItems: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 10,
   },
 });
 

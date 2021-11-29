@@ -123,7 +123,7 @@ const App = () => {
             name="Info"
             component={Info}
             options={{
-              title: 'Sobre la App',
+              title: 'Información',
               headerStyle: {
                 backgroundColor: '#4d305e',
               },
