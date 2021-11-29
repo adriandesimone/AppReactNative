@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 
 const CiudadAgregar = ({
   item,
@@ -10,49 +9,64 @@ const CiudadAgregar = ({
   onIconPress,
 }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-      <View style={styles.form_row}>
-        <View style={styles.view_content}>
-          <Text style={[styles.title, textColor]}>
-            {item.name} ({item.country})
-          </Text>
-          <Text style={[styles.detail, textColor]}>ID: {item.id}</Text>
-          <Text style={[styles.detail, textColor]}>
-            Lat: {item.lat} - Lon: {item.lon}
-          </Text>
-        </View>
-        <View>
-          <Icon
-            name="plus-circle"
-            size={44}
-            style={textColor}
-            onPress={onIconPress}
-          />
-        </View>
+    <TouchableOpacity onPress={onPress, onIconPress} style={[styles.item, backgroundColor]}>
+      <View style={styles.view_content}>
+        <Text style={[styles.title, textColor]}>
+          {item.name} ({item.country})
+        </Text>
+        {item.icon && item.temp ? (
+          <>
+            <Image
+              style={styles.imgWeather}
+              source={item.icon}
+            />
+            <Text style={styles.temp}>
+              {parseInt(item.temp - 273.15)} &#x2103;
+            </Text>
+          </>
+        ) : (
+          <>
+            <Text style={[styles.detail, textColor]}>ID: {item.id}</Text>
+            <Text style={[styles.detail, textColor]}>
+              Lat: {item.lat} - Lon: {item.lon}
+            </Text>
+          </>
+        )}
       </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  form_row: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-  },
-  view_content: {
-    width: '90%',
-  },
   item: {
     padding: 10,
-    marginVertical: 5,
-    marginHorizontal: 5,
+    marginBottom: 12,
+    borderRadius: 10,
+  },
+  view_content: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
+    flex: 1,
     fontSize: 20,
     fontWeight: 'bold',
   },
+  imgWeather: {
+    alignSelf: 'center',
+    marginTop: -8,
+    marginBottom: -8,
+    marginHorizontal: 8,
+    width: 50,
+    height: 50,
+  },
   detail: {
     fontSize: 12,
+  },
+  temp: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#eee',
   },
 });
 
